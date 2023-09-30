@@ -112,6 +112,8 @@
             },
             removeTodo: function (todo, index) {
                 console.log('remove');
+                if (confirm('Really delete ?') == false) return;
+
                 const vm = this;
                 axios
                     .delete('/api/todo/' + todo.id + '/delete/')
