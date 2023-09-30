@@ -67,7 +67,7 @@
     <ul class="todoList">
         <li v-for="(todo, index) in todoList">
             <span>[[ todo.name ]]: [[ todo.todo ]] </span>
-            <span class="removeBtn" v-on:click="removeTodo(index)">&#x00D7;</span>
+            <span class="removeBtn" v-on:click="removeTodo(todo, index)">&#x00D7;</span>
         </li>
     </ul>
 </div>
@@ -98,9 +98,18 @@
                 this.todoList.push({ name: this.name, todo: this.todo });
                 this.name = this.todo = '';
             },
-            removeTodo: function (index) {
+            removeTodo: function (todo, index) {
                 console.log('remove');
-                this.todoList.splice(index, 1);
+                const vm = this;
+                axios
+                    .delete('/api/todo/' + todo.id + '/delete/')
+                    .then(function (res) {
+                        console.log('remove res', res);
+                        vm.todoList.splice(index, 1);
+                    })
+                    .catch(function (e) {
+                        console.log('error', e);
+                    });
             },
             fetch_all_todo: function () {
                 console.log('fetch_all_todo');
@@ -111,7 +120,7 @@
                         console.log('GET RES', res);
                         vm.todoList = res.data;
                     })
-                    .chatch(function (e) {
+                    .catch(function (e) {
                         console.log('error', e);
                     });
             },
