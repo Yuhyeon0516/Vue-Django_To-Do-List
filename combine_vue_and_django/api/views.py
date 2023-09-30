@@ -4,12 +4,13 @@ from django.http import JsonResponse
 from django.views.generic.edit import BaseDeleteView, BaseCreateView
 from django.views.generic.list import BaseListView
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from todo.models import Todo
 
 
 # Create your views here.
+@method_decorator(ensure_csrf_cookie, name="dispatch")
 class ApiTodoLV(BaseListView):
     model = Todo
 
