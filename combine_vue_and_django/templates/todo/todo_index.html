@@ -75,6 +75,9 @@
 <script src="https://unpkg.com/vue@2"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+    axios.defaults.xsrfCookieName = 'csrftoken';
+    axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+
     var vm = new Vue({
         delimiters: ['[[', ']]'],
         el: '#app',
