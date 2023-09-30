@@ -45,9 +45,6 @@
         font-size: 20px;
         cursor: pointer;
     }
-    .addBtn {
-        cursor: pointer;
-    }
 </style>
 {% endblock extra-style %} {% block content %}
 <div id="app">
@@ -57,7 +54,7 @@
 
     <form action="." method="post">
         {% csrf_token %}
-        <button type="submit">Confirm</button>
+        <button type="submit" class="btn btn-danger btn-sm">Confirm</button>
     </form>
 </div>
 {% endblock content %}
