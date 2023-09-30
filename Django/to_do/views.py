@@ -1,7 +1,28 @@
-from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, CreateView, ListView, DeleteView
+
+from to_do.models import Todo
 
 # Create your views here.
 
 
 class ToDoVueOnlyTV(TemplateView):
     template_name = "todo/todo_vue_only.html"
+
+
+class ToDoCV(CreateView):
+    model = Todo
+    fields = "__all__"
+    template_name = "todo/todo_form.html"
+    success_url = reverse_lazy("todo:list")
+
+
+class ToDoLV(ListView):
+    model = Todo
+    template_name = "todo/todo_list.html"
+
+
+class ToDoDelV(DeleteView):
+    model = Todo
+    template_name = "todo/todo_confirm_delete.html"
+    success_url = reverse_lazy("todo:list")
