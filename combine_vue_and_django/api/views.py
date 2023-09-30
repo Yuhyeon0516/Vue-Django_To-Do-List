@@ -1,7 +1,6 @@
 import json
-from typing import Any
 from django.forms import model_to_dict
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.views.generic.edit import BaseDeleteView, BaseCreateView
 from django.views.generic.list import BaseListView
 from django.utils.decorators import method_decorator
@@ -20,7 +19,6 @@ class ApiTodoLV(BaseListView):
         return JsonResponse(data=todoList, safe=False)
 
 
-@method_decorator(csrf_exempt, name="dispatch")
 class ApiTodoDelV(BaseDeleteView):
     model = Todo
 
@@ -30,7 +28,6 @@ class ApiTodoDelV(BaseDeleteView):
         return JsonResponse(data={}, status=204)
 
 
-@method_decorator(csrf_exempt, name="dispatch")
 class ApiTodoCV(BaseCreateView):
     model = Todo
     fields = "__all__"
