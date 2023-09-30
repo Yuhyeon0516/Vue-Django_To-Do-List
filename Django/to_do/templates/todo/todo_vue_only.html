@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Vue-Django ToDo App</title>
+
+        <style>
+            body {
+                text-align: center;
+                background-color: #ddd;
+            }
+            .inputBox {
+                margin: auto;
+                width: 70%;
+                background: white;
+                height: 50px;
+                border-radius: 50px;
+                line-height: 50px;
+            }
+            .inputBox .name {
+                border-style: none;
+                border-bottom: 1px solid #ddd;
+                width: 70px;
+                padding-left: 20px;
+            }
+            .inputBox .item {
+                border-style: none;
+                border-bottom: 1px solid #ddd;
+                width: 400px;
+                margin-left: 50px;
+                padding-left: 20px;
+            }
+            .todoList {
+                list-style: none;
+                padding: 10px 0;
+                text-align: left;
+            }
+            .todoList li {
+                display: flex;
+                height: 50px;
+                line-height: 50px;
+                margin: 0.5rem 0;
+                padding: 0 0.9rem;
+                background: white;
+                border-radius: 5px;
+            }
+            .removeBtn {
+                margin-left: auto;
+                font-size: 20px;
+                cursor: pointer;
+            }
+            .addBtn {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <h1>My To Do App !</h1>
+            <strong>서로 할 일이나 의견을 공유해 봅시다.</strong>
+            <br />
+
+            <div class="inputBox">
+                <input v-model="name" class="name" type="text" placeholder="name ..." />
+                <input v-model="newToDoItem" class="item" type="text" placeholder="type anything welcomed ..." v-on:keyup.enter="addToDo()" />
+                <button v-on:click="addToDo()" class="addBtn">ADD</button>
+            </div>
+
+            <ul class="todoList">
+                <li v-for="(toDo, index) in toDoItems">
+                    <span>{ toDo.name }: { toDo.item }</span>
+                    <span class="removeBtn" v-on:click="removeToDo(index)">&#x00D7;</span>
+                </li>
+            </ul>
+        </div>
+
+        <script src="https://unpkg.com/vue@2"></script>
+        <script>
+            var vm = new Vue({
+                delimiters: ['{', '}'],
+                el: '#app',
+                data: {
+                    name: '',
+                    newToDoItem: '',
+                    toDoItems: [
+                        { name: '김유현', item: 'Django 와 Vue.js 연동 프로그램을 만들고 있습니다.' },
+                        { name: '홍길동', item: '이름을 안쓰면 홍길동으로 나와요...' },
+                        { name: '이순신', item: '신에게는 아직 열두 척의 배가 있사옵니다.' },
+                        { name: '성춘향', item: '그네 타기' },
+                    ],
+                },
+                methods: {
+                    addToDo: function () {
+                        if (this.name == '') this.name = '김유현';
+                        if (this.newToDoItem == '') {
+                            this.name = '';
+                            return;
+                        }
+                        this.toDoItems.push({ name: this.name, item: this.newToDoItem });
+                        this.name = '';
+                        this.newToDoItem = '';
+                    },
+                    removeToDo: function (index) {
+                        this.toDoItems.splice(index, 1);
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
