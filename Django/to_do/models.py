@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 from django.db import models
 
 # Create your models here.
@@ -9,3 +10,15 @@ class Todo(models.Model):
 
     def __str__(self):
         return self.todo
+
+    def save(
+        self,
+        force_insert: bool = False,
+        force_update: bool = False,
+        using: str | None = None,
+        update_fields: Iterable[str] | None = None,
+    ) -> None:
+        if not self.name:
+            self.name = "abc"
+
+        return super().save(force_insert, force_update, using, update_fields)
